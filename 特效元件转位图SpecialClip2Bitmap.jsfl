@@ -75,15 +75,23 @@ for(i in itemArray){
                             //symbolelements[ele].symbolType="graphic";
                             //an.getDocumentDOM().convertToSymbol("graphic","SpecialClip_"+x,"top left");
                             //var bitmapPath = fl.browseForFileURL("save", "保存位图", "PNG 文件:*.png");
-                            //定位到当前层
-                            an.getDocumentDOM().getTimeline().currentLayer=ly;
-                            //定位到当前帧
-                            an.getDocumentDOM().getTimeline().currentFrame=frm;
-                            an.getDocumentDOM().selection=[symbolelements[ele]];
-                            an.getDocumentDOM().convertSelectionToBitmap();
-                            symbolelements=frameArray[frm].elements;
-                            ele--;
-                            an.getDocumentDOM().selectNone();
+                            //检测是否被锁或者是否隐藏
+                            if((!an.getDocumentDOM().getTimeline().getLayerProperty("locked")&&(an.getDocumentDOM().getTimeline().getLayerProperty("visible")))){
+                                //定位到当前层
+                                an.getDocumentDOM().getTimeline().currentLayer=ly;
+                                //定位到当前帧
+                                an.getDocumentDOM().getTimeline().currentFrame=frm;
+                                an.getDocumentDOM().selection=[symbolelements[ele]];
+                                an.getDocumentDOM().convertSelectionToBitmap();
+                                symbolelements=frameArray[frm].elements;
+                                ele--;
+                                an.getDocumentDOM().selectNone();
+                                an.trace("SpecialClip2Bitmap......");
+                            }
+                            else{
+                                an.trace("This layer is invisible or locked. ");
+                            }
+
 
                             //symbolelements[ele].selected = false;
                             //an.getDocumentDOM().exitEditMode();
@@ -156,7 +164,7 @@ for(i in itemArray){
                             //symbolelements[ele]=importedBitmap;
                             //改变颜色模式为无
                             //symbolelements[ele].colorMode=="none";
-                            an.trace("SpecialClip2Bitmap......");
+
                             //an.trace("SpecialClip2Bitmap:"+symbolelements[ele].elementType);
                         }
                         /*else{

@@ -1,5 +1,5 @@
 ﻿//
-// AllLayersUnVisible
+// AllLayersInVisible
 //
 // This command was recorded by Adobe Animate.
 // This plugin was made by Endlin Boeingstein 2024/6/28
@@ -33,7 +33,7 @@ for(i in itemArray){
             if(an.getDocumentDOM().getTimeline().getLayerProperty("visible")){
                 // 显示图层: false
                 an.getDocumentDOM().getTimeline().setLayerProperty('visible', false);
-                an.trace("Layer is Unvisible");
+                an.trace("Layer is Invisible");
             }
         }
         // 返回到主场景
@@ -49,7 +49,7 @@ for(i in itemArray){
 }
 
 
-alert("AllLayersUnVisible Done");
+alert("AllLayersInVisible Done");
 
 
 

@@ -53,8 +53,11 @@ for(i in itemArray){
                                 symbolelements=frameArray[frm].elements;
                                 ele--;
                                 an.getDocumentDOM().selectNone();
+                                an.trace("BitmapToEdge......");
                             }
-
+                            else{
+                                an.trace("This layer is invisible or locked. ");
+                            }
 
 
 
@@ -76,7 +79,7 @@ for(i in itemArray){
                             // an.getDocumentDOM().selection[0]=symbolelements[ele];
                             // //转换为位图
                             // an.getDocumentDOM().traceBitmap(1, 1, 'pixels', 'few corners');
-                            an.trace("BitmapToEdge......");
+
                         }
                         /*else{
                             ele++;
