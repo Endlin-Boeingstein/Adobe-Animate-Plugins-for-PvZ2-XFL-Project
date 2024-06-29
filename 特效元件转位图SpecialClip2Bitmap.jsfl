@@ -5,6 +5,14 @@
 // This plugin was made by Endlin Boeingstein 2024/6/16
 
 
+/**
+ * Created with IntelliJ IDEA.
+ * User: Endlin Boeingstein
+ * Date: 2024/6/17
+ * Time: 20:31
+ * To change this template use File | Settings | File Templates.
+ */
+
 
 // //主xfl路径
 // var mainxflpath=(an.getDocumentDOM().pathURI).substring(0,(an.getDocumentDOM().pathURI).lastIndexOf("/"));
@@ -32,20 +40,18 @@ for(i in itemArray){
         //循环得到图层内容
         for(var ly=0;ly< symbollayers.length;ly++){
             an.trace("layer name:"+symbollayers[ly].name);
-            //定位到当前层
-            an.getDocumentDOM().getTimeline().currentLayer=ly;
+
             //获取帧数组
             var frameArray = symbollayers[ly].frames;
             //遍历获取帧
             for(var frm=0;frm< frameArray.length;frm++){
-                //定位到当前帧
-                an.getDocumentDOM().getTimeline().currentFrame=frm;
+
                 //获取引用对象数组
                 var symbolelements=frameArray[frm].elements;
-                var ele=0;
-                while(ele<symbolelements.length)
+                /*var ele=0;
+                while(ele<symbolelements.length)*/
                 //遍历获取引用对象
-                /*for(ele in symbolelements)*/{
+                for(var ele=0;ele<symbolelements.length;ele++){
                     //an.trace("element type:"+symbolelements[ele].elementType);
                     //如果类型为元件
                     if(symbolelements[ele].elementType=="instance"){
@@ -69,9 +75,16 @@ for(i in itemArray){
                             //symbolelements[ele].symbolType="graphic";
                             //an.getDocumentDOM().convertToSymbol("graphic","SpecialClip_"+x,"top left");
                             //var bitmapPath = fl.browseForFileURL("save", "保存位图", "PNG 文件:*.png");
+                            //定位到当前层
+                            an.getDocumentDOM().getTimeline().currentLayer=ly;
+                            //定位到当前帧
+                            an.getDocumentDOM().getTimeline().currentFrame=frm;
                             an.getDocumentDOM().selection=[symbolelements[ele]];
                             an.getDocumentDOM().convertSelectionToBitmap();
                             symbolelements=frameArray[frm].elements;
+                            ele--;
+                            an.getDocumentDOM().selectNone();
+
                             //symbolelements[ele].selected = false;
                             //an.getDocumentDOM().exitEditMode();
 
@@ -146,9 +159,9 @@ for(i in itemArray){
                             an.trace("SpecialClip2Bitmap......");
                             //an.trace("SpecialClip2Bitmap:"+symbolelements[ele].elementType);
                         }
-                        else{
+                        /*else{
                             ele++;
-                        }
+                        }*/
 
                     }
                 }

@@ -12,53 +12,90 @@ var itemArray = an.getDocumentDOM().library.items;
 //循环获取库内容
 for(i in itemArray){
     //输出文件名称
-    an.trace("library item's name:"+itemArray[i].name); 
+    an.trace("library item's name:"+itemArray[i].name);
     //输出文件类型
     //an.trace(itemArray[i].itemType);
     //判定是否为元件（影片剪辑/图形）
     if(itemArray[i].itemType=="movie clip"||itemArray[i].itemType=="graphic"){
+        // 打开库中的元件
+        an.getDocumentDOM().library.editItem(itemArray[i].name);
         //获取时间轴
         var symboltl=itemArray[i].timeline;
         //获取时间轴内的图层
         var symbollayers=symboltl.layers;
         //循环得到图层内容
-        for(ly in symbollayers){
+        for(var ly=0;ly< symbollayers.length;ly++){
             an.trace("layer name:"+symbollayers[ly].name);
+
             //获取帧数组
             var frameArray = symbollayers[ly].frames;
             //遍历获取帧
-            for(frm in frameArray){
+            for(var frm=0;frm< frameArray.length;frm++){
+
                 //获取引用对象数组
                 var symbolelements=frameArray[frm].elements;
+                //var ele=0;
+                /*while(ele<symbolelements.length)*/
                 //遍历获取引用对象
-                for(ele in symbolelements){
+                for(var ele=0;ele<symbolelements.length;ele++){
                     //an.trace("element type:"+symbolelements[ele].elementType);
                     //如果类型为shape(edge)
                     if(symbolelements[ele].elementType=="instance"){
                         if(symbolelements[ele].instanceType=="bitmap"){
-                            //指向矢量图
-                            symbolelements[ele].selected = true;
-                            //废弃语句
-                            //选择编辑对象
-                            an.getDocumentDOM().library.selectItem(itemArray[i].name);
-                            //编辑元件
-                            an.getDocumentDOM().library.editItem();
-                            //选择矢量图
-                            an.getDocumentDOM().selection[0]=symbolelements[ele];
-                            //转换为位图
-                            an.getDocumentDOM().traceBitmap(1, 1, 'pixels', 'few corners');
+                            //定位到当前层
+                            an.getDocumentDOM().getTimeline().currentLayer=ly;
+                            //定位到当前帧
+                            an.getDocumentDOM().getTimeline().currentFrame=frm;
+                            //检测是否被锁或者是否隐藏
+                            if((!an.getDocumentDOM().getTimeline().getLayerProperty("locked")&&(an.getDocumentDOM().getTimeline().getLayerProperty("visible")))){
+                                an.getDocumentDOM().selection=[symbolelements[ele]];
+                                an.getDocumentDOM().traceBitmap(1, 1, 'pixels', 'few corners');
+                                symbolelements=frameArray[frm].elements;
+                                ele--;
+                                an.getDocumentDOM().selectNone();
+                            }
+
+
+
+
+
+
+
+
+
+
+
+                            // //指向矢量图
+                            // symbolelements[ele].selected = true;
+                            // //废弃语句
+                            // //选择编辑对象
+                            // an.getDocumentDOM().library.selectItem(itemArray[i].name);
+                            // //编辑元件
+                            // an.getDocumentDOM().library.editItem();
+                            // //选择矢量图
+                            // an.getDocumentDOM().selection[0]=symbolelements[ele];
+                            // //转换为位图
+                            // an.getDocumentDOM().traceBitmap(1, 1, 'pixels', 'few corners');
                             an.trace("BitmapToEdge......");
                         }
+                        /*else{
+                            ele++;
+                        }*/
                     }
+                    /*else{
+                        ele++;
+                    }*/
                 }
             }
         }
+        // 返回到主场景
+        an.getDocumentDOM().exitEditMode();
 
         //获取libaryitem名，否则返回场景名
-        //var it = symboltl.libraryItem; 
-        //if (it) 
-        //fl.trace("libraryItem name: " + it.name); 
-        //else 
+        //var it = symboltl.libraryItem;
+        //if (it)
+        //fl.trace("libraryItem name: " + it.name);
+        //else
         //fl.trace("scene name: " + an.getDocumentDOM().getTimeline().name);
     }
 }
@@ -81,8 +118,8 @@ alert("BitmapToEdge Done");
 
 // 选择库项目: Symbol 35
 //var lib=an.getDocumentDOM().library;
-//for (item in lib) { 
- //an.trace(lib[item].name); 
+//for (item in lib) {
+//an.trace(lib[item].name);
 //}
 //an.getDocumentDOM().library.selectItem('Symbol 35');
 
