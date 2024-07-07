@@ -49,9 +49,11 @@ for(i in itemArray){
             for(var frm=0;frm<frameArray.length;frm++){
 
                 //检测是否为补间
-                if(symboltl.getFrameProperty("tweenType",frm)!="none"){
+                if(frameArray[frm].tweenType!="none")
+                /*if(symboltl.getFrameProperty("tweenType",frm)!="none")*/{
                     //独立帧没法被转换，直接跳
-                    if(symboltl.getFrameProperty("duration",frm)==1){
+                    if(frameArray[frm].duration==1)
+                    /*if(symboltl.getFrameProperty("duration",frm)==1)*/{
                         an.getDocumentDOM().selectNone();
                         continue;
                     }
@@ -65,6 +67,7 @@ for(i in itemArray){
 
 
                     frm--;
+                    frameArray = symbollayers[ly].frames;
                     an.getDocumentDOM().selectNone();
                     an.trace("ConvertToKeyframes......");
                 }
