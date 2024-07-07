@@ -1,12 +1,4 @@
-﻿/**
- * Created with IntelliJ IDEA.
- * User: Endlin Boeingstein
- * Date: 2024/6/27
- * Time: 21:18
- * To change this template use File | Settings | File Templates.
- */
-
-//
+﻿//
 // ConvertToKeyframes
 //
 // This command was recorded by Adobe Animate.
