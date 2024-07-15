@@ -42,6 +42,7 @@ for(i in itemArray){
                     //如果类型为shape(edge)
                     if(symbolelements[ele].elementType=="instance"){
                         if(symbolelements[ele].instanceType=="bitmap"){
+                            an.getDocumentDOM().selectNone();
                             //定位到当前层
                             an.getDocumentDOM().getTimeline().currentLayer=ly;
                             //定位到当前帧

@@ -53,8 +53,7 @@ for(i in itemArray){
                         //an.getDocumentDOM().convertSelectionToBitmap();
                         //}
 
-
-
+                        an.getDocumentDOM().selectNone();
                         //定位到当前层
                         an.getDocumentDOM().getTimeline().currentLayer=ly;
                         //定位到当前帧

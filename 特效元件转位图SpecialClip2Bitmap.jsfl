@@ -77,6 +77,7 @@ for(i in itemArray){
                             //var bitmapPath = fl.browseForFileURL("save", "保存位图", "PNG 文件:*.png");
                             //检测是否被锁或者是否隐藏
                             if((!an.getDocumentDOM().getTimeline().getLayerProperty("locked")&&(an.getDocumentDOM().getTimeline().getLayerProperty("visible")))){
+                                an.getDocumentDOM().selectNone();
                                 //定位到当前层
                                 an.getDocumentDOM().getTimeline().currentLayer=ly;
                                 //定位到当前帧

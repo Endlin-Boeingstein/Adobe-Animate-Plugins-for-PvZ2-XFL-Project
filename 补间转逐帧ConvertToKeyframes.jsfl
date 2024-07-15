@@ -49,6 +49,7 @@ for(i in itemArray){
                         an.getDocumentDOM().selectNone();
                         continue;
                     }
+                    an.getDocumentDOM().selectNone();
                     //定位到当前层
                     an.getDocumentDOM().getTimeline().currentLayer=ly;
                     //定位到当前帧
