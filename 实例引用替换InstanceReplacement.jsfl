@@ -28,74 +28,79 @@ try{
         an.trace("library item's name:"+itemArray[i].name);
         //输出文件类型
         //an.trace(itemArray[i].itemType);
-        //判定是否为元件（影片剪辑/图形）
-        if(itemArray[i].itemType=="movie clip"||itemArray[i].itemType=="graphic"){
-            // 打开库中的元件
-            an.getDocumentDOM().library.editItem(itemArray[i].name);
-            //获取时间轴
-            var symboltl=itemArray[i].timeline;
-            //获取时间轴内的图层
-            var symbollayers=symboltl.layers;
-            //循环得到图层内容
-            for(var ly=0;ly< symbollayers.length;ly++){
-                an.trace("layer name:"+symbollayers[ly].name);
+        //避免B引用A导致重复无效替换卡死，也就是造成B引用B的情况
+        if(itemArray[i].name!=B_name){
+            //判定是否为元件（影片剪辑/图形）
+            if(itemArray[i].itemType=="movie clip"||itemArray[i].itemType=="graphic"){
+                // 打开库中的元件
+                an.getDocumentDOM().library.editItem(itemArray[i].name);
+                //获取时间轴
+                var symboltl=itemArray[i].timeline;
+                //获取时间轴内的图层
+                var symbollayers=symboltl.layers;
+                //循环得到图层内容
+                for(var ly=0;ly< symbollayers.length;ly++){
+                    an.trace("layer name:"+symbollayers[ly].name);
 
-                //获取帧数组
-                var frameArray = symbollayers[ly].frames;
-                //遍历获取帧
-                for(var frm=0;frm< frameArray.length;frm++){
+                    //获取帧数组
+                    var frameArray = symbollayers[ly].frames;
+                    //遍历获取帧
+                    for(var frm=0;frm< frameArray.length;frm++){
 
-                    //获取引用对象数组
-                    var symbolelements=frameArray[frm].elements;
-                    /*var ele=0;
-                    while(ele<symbolelements.length)*/
-                    //遍历获取引用对象
-                    for(var ele=0;ele<symbolelements.length;ele++){
-                        //an.trace("element type:"+symbolelements[ele].elementType);
-                        //如果类型为元件
-                        if(symbolelements[ele].elementType=="instance"){
-                            //an.trace("Instance: " + symbolelements[ele].instanceType);
-                            /*if(symbolelements[ele].instanceType=="symbol"){*/
-                            //an.trace("引用:"+a.name+"引用"+symbolelements[ele].libraryItem.name);
-                            if(symbolelements[ele].libraryItem.name==A_name){
-                                //检测是否被锁或者是否隐藏
-                                if((!an.getDocumentDOM().getTimeline().getLayerProperty("locked")&&(an.getDocumentDOM().getTimeline().getLayerProperty("visible")))){
-                                    an.getDocumentDOM().selectNone();
-                                    //定位到当前层
-                                    an.getDocumentDOM().getTimeline().currentLayer=ly;
-                                    //定位到当前帧
-                                    an.getDocumentDOM().getTimeline().currentFrame=frm;
-                                    an.getDocumentDOM().selection=[symbolelements[ele]];
-                                    an.getDocumentDOM().swapElement(B_name);
-                                    symbolelements=frameArray[frm].elements;
-                                    ele--;
-                                    an.getDocumentDOM().selectNone();
-                                    an.trace(A_name+"->"+B_name+"......");
+                        //获取引用对象数组
+                        var symbolelements=frameArray[frm].elements;
+                        /*var ele=0;
+                        while(ele<symbolelements.length)*/
+                        //遍历获取引用对象
+                        for(var ele=0;ele<symbolelements.length;ele++){
+                            //an.trace("element type:"+symbolelements[ele].elementType);
+                            //如果类型为元件
+                            if(symbolelements[ele].elementType=="instance"){
+                                //an.trace("Instance: " + symbolelements[ele].instanceType);
+                                /*if(symbolelements[ele].instanceType=="symbol"){*/
+                                //an.trace("引用:"+a.name+"引用"+symbolelements[ele].libraryItem.name);
+                                if(symbolelements[ele].libraryItem.name==A_name){
+                                    //检测是否被锁或者是否隐藏
+                                    if((!an.getDocumentDOM().getTimeline().getLayerProperty("locked")&&(an.getDocumentDOM().getTimeline().getLayerProperty("visible")))){
+                                        an.getDocumentDOM().selectNone();
+                                        //定位到当前层
+                                        an.getDocumentDOM().getTimeline().currentLayer=ly;
+                                        //定位到当前帧
+                                        an.getDocumentDOM().getTimeline().currentFrame=frm;
+                                        an.getDocumentDOM().selection=[symbolelements[ele]];
+                                        an.getDocumentDOM().swapElement(B_name);
+                                        symbolelements=frameArray[frm].elements;
+                                        ele--;
+                                        an.getDocumentDOM().selectNone();
+                                        an.trace(A_name+"->"+B_name+"......");
+                                    }
+                                    else{
+                                        an.trace("This layer is invisible or locked. ");
+                                    }
                                 }
-                                else{
-                                    an.trace("This layer is invisible or locked. ");
-                                }
+                                else{}
+                                /*}
+                                else{}*/
+
+
                             }
-                            else{}
-                            /*}
-                            else{}*/
-
-
                         }
                     }
                 }
+
+                // 返回到主场景
+                an.getDocumentDOM().exitEditMode();
+
+                //获取libaryitem名，否则返回场景名
+                //var it = symboltl.libraryItem;
+                //if (it)
+                //fl.trace("libraryItem name: " + it.name);
+                //else
+                //fl.trace("scene name: " + an.getDocumentDOM().getTimeline().name);
             }
-
-            // 返回到主场景
-            an.getDocumentDOM().exitEditMode();
-
-            //获取libaryitem名，否则返回场景名
-            //var it = symboltl.libraryItem;
-            //if (it)
-            //fl.trace("libraryItem name: " + it.name);
-            //else
-            //fl.trace("scene name: " + an.getDocumentDOM().getTimeline().name);
         }
+        else{}
+
     }
 
 //an.getDocumentDOM().selectNone();
