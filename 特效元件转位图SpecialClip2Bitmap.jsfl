@@ -56,8 +56,34 @@ for(i in itemArray){
                     //如果类型为元件
                     if(symbolelements[ele].elementType=="instance"){
 
-                        //如果使用高级
-                        if(symbolelements[ele].colorMode=="advanced"||(symbolelements[ele].getFilters()).length>0){
+
+
+
+                        // an.getDocumentDOM().selectNone();
+                        // //定位到当前层
+                        // an.getDocumentDOM().getTimeline().currentLayer=ly;
+                        // //定位到当前帧
+                        // an.getDocumentDOM().getTimeline().currentFrame=frm;
+                        // an.getDocumentDOM().selection=[symbolelements[ele]];
+                        // //获取滤镜数量
+                        // var filtercount=(an.getDocumentDOM().getFilters()).length;
+                        // an.trace("filtercount:"+filtercount);
+                        // an.getDocumentDOM().selectNone();
+                        //预定义是否含滤镜
+                        var havefilters=false;
+                        //判断是否含滤镜
+                        if(symbolelements[ele].elementType=="instance"&&symbolelements[ele].instanceType=="symbol"){
+                            var filtersarray=null;
+                            filtersarray=symbolelements[ele].filters;
+                            if(filtersarray!=null&&filtersarray.length>0){
+                                havefilters=true;
+                            }
+                        }
+
+
+
+                        //如果使用高级或滤镜
+                        if(symbolelements[ele].colorMode=="advanced"||/*(symbolelements[ele].getFilters()).length>0*//*filtercount>0*/havefilters){
                             // var position=[symbolelements[ele].x,symbolelements[ele].y];
                             // var width=symbolelements[ele].width;
                             // var height=symbolelements[ele].height;
