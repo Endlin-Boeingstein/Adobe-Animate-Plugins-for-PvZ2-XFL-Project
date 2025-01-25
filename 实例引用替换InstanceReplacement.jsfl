@@ -68,11 +68,19 @@ try{
                                         //定位到当前帧
                                         an.getDocumentDOM().getTimeline().currentFrame=frm;
                                         an.getDocumentDOM().selection=[symbolelements[ele]];
-                                        an.getDocumentDOM().swapElement(B_name);
+                                        //记录旧名称
+                                        var elementoldname=symbolelements[ele].libraryItem.name;
+                                        //确定交换为的元件
+                                        var swaper=itemArray[an.getDocumentDOM().library.findItemIndex(B_name)];
+                                        //交换引用
+                                        an.getDocumentDOM().selection[0].libraryItem = swaper;
+                                        //2025年1月25日废除//an.getDocumentDOM().swapElement(B_name);
+                                        an.trace(elementoldname+"->"+symbolelements[ele].libraryItem.name+"......");
+                                        //刷新数组
                                         symbolelements=frameArray[frm].elements;
-                                        ele--;
+                                        //2025年1月24日废弃//ele--;
+                                        ele=-1;
                                         an.getDocumentDOM().selectNone();
-                                        an.trace(A_name+"->"+B_name+"......");
                                     }
                                     else{
                                         an.trace("This layer is invisible or locked. ");
